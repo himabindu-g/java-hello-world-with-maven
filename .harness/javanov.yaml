@@ -1,0 +1,45 @@
+pipeline:
+  name: java-nov
+  identifier: javanov
+  projectIdentifier: ORCA_onedev
+  orgIdentifier: default
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: testinggithub
+        repoName: java-hello-world-with-maven
+        build: <+input>
+  stages:
+    - stage:
+        name: get-codefromgithub
+        identifier: getcodefromgithub
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Cloud
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: GitClone
+                  name: GitClone_1
+                  identifier: GitClone_1
+                  spec:
+                    connectorRef: testinggithub
+                    repoName: java-hello-world-with-maven
+                    build:
+                      type: branch
+                      spec:
+                        branch: master
+                  description: clone the repo
+              - step:
+                  type: Test
+                  name: Test_1
+                  identifier: Test_1
+                  spec: {}
