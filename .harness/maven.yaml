@@ -46,6 +46,7 @@ pipeline:
                     command: |-
                       mvn -version
                       mvn clean install
+                      ls target/
               - step:
                   type: Run
                   name: Run_2
