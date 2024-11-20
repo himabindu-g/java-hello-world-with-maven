@@ -31,9 +31,38 @@ pipeline:
                   name: GitClone_1
                   identifier: GitClone_1
                   spec:
-                    connectorRef: testinggithub
-                    repoName: java-hello-world-with-maven
+                    connectorRef: IACgcptest
+                    repoName: Java_app
                     build:
                       type: branch
                       spec:
-                        branch: master-patch
+                        branch: main
+              - step:
+                  type: Run
+                  name: Run_1
+                  identifier: Run_1
+                  spec:
+                    shell: Sh
+                    command: |-
+                      mvn -version
+                      mvn clean install
+              - step:
+                  type: Run
+                  name: Run_2
+                  identifier: Run_2
+                  spec:
+                    shell: Sh
+                    command: |-
+                      target/my-app-1.0.0.jar
+                      docker build -t my-app-image .
+              - step:
+                  type: BuildAndPushGCR
+                  name: BuildAndPushGCR_1
+                  identifier: BuildAndPushGCR_1
+                  spec:
+                    connectorRef: gcpbin
+                    host: us-central1-docker.pkg.dev/smooth-keel-441611-d0/testing
+                    projectID: smooth-keel-441611-d0
+                    imageName: maven
+                    tags:
+                      - v1
