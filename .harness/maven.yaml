@@ -55,6 +55,10 @@ pipeline:
                     shell: Sh
                     command: |-
                       target/jb-hello-world-maven-0.2.0.jar
+                      ls -l target/jb-hello-world-maven-0.2.0.jar
+                      -rw-r--r-- 1 user group 1234567 Nov 20 15:30 target/jb-hello-world-maven-0.2.0.jar
+                      chmod 644 target/jb-hello-world-maven-0.2.0.jar
+
                       docker build -t my-app-image .
               - step:
                   type: BuildAndPushGCR
